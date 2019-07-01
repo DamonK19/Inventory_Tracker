@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home">
+
+    <TextView
+        android:id="@+id/txtInventory"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center_horizontal"
+        android:text="Inventory"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="13dp"
+        tools:layout_editor_absoluteY="11dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerIngredients"
+        android:layout_width="match_parent"
+        android:layout_height="144dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="82dp" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        tools:layout_editor_absoluteX="65dp"
+        tools:layout_editor_absoluteY="303dp" />
+
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        tools:layout_editor_absoluteX="248dp"
+        tools:layout_editor_absoluteY="303dp" />
+
+    <TextView
+        android:id="@+id/txtRecipesAvailable"
+        android:layout_width="388dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_horizontal"
+        android:text="Recipes Available"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="370dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRecipes"
+        android:layout_width="398dp"
+        android:layout_height="113dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="430dp" />
+
+    <Button
+        android:id="@+id/btnUse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use"
+        tools:layout_editor_absoluteX="65dp"
+        tools:layout_editor_absoluteY="641dp" />
+
+    <Button
+        android:id="@+id/btnViewLibrary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Library"
+        tools:layout_editor_absoluteX="249dp"
+        tools:layout_editor_absoluteY="640dp" />
+
+</LinearLayout>
