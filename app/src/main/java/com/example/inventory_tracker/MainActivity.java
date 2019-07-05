@@ -24,10 +24,13 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     FirebaseUser user = mAuth.getCurrentUser();
+                                    Toast.makeText(MainActivity.this, "Registration successful.",
+                                            Toast.LENGTH_SHORT).show();
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), Home.class));
                                 } else {
@@ -72,8 +77,11 @@ public class MainActivity extends AppCompatActivity {
                                 // If sign in fails, display a message to the user.
                                 if (task.isSuccessful()) {
                                     FirebaseUser user = mAuth.getCurrentUser();
+
+                                    Toast.makeText(MainActivity.this, "Authentication successful.",
+                                            Toast.LENGTH_SHORT).show();
                                     finish();
-                                    openHome();
+                                    openHome(user);
                                 } else {
                                     Toast.makeText(MainActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
@@ -84,8 +92,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void openHome() {
+    public void openHome(FirebaseUser user) {
         Intent intent = new Intent(this, Home.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
