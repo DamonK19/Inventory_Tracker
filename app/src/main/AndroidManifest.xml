@@ -13,7 +13,7 @@
         <activity android:name=".Inventory" />
         <activity android:name=".ViewRecipe" />
         <activity android:name=".RecipeLibrary" />
-        <activity android:name=".Ingredient" />
+        <activity android:name=".IngredientAdd" />
         <activity android:name=".Home" />
         <activity android:name=".MainActivity">
             <intent-filter>

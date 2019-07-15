@@ -40,7 +40,7 @@ public class IngredientAdd extends AppCompatActivity {
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setTimestampsInSnapshotsEnabled(true)
                 .build();
-        db.setFirestoreSettings(settings);
+        //db.setFirestoreSettings(settings);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user = (FirebaseUser) extras.get("user");
@@ -91,6 +91,7 @@ public class IngredientAdd extends AppCompatActivity {
 
     public void openHome() {
         Intent intent = new Intent(this, Home.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 

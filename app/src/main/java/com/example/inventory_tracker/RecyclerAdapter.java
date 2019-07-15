@@ -29,7 +29,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.name.setText(list.get(position).name);
+        holder.name.setText(list.get(position).name + ": " + list.get(position).amount + list.get(position).unit) ;
     }
 
     @Override
