@@ -17,28 +17,11 @@
         tools:layout_editor_absoluteX="13dp"
         tools:layout_editor_absoluteY="11dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="144dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="82dp" />
-
     <Button
-        android:id="@+id/btn_add"
+        android:id="@+id/btnViewInventory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add"
-        tools:layout_editor_absoluteX="65dp"
-        tools:layout_editor_absoluteY="303dp" />
-
-    <Button
-        android:id="@+id/btnEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        tools:layout_editor_absoluteX="248dp"
-        tools:layout_editor_absoluteY="303dp" />
+        android:text="View" />
 
     <TextView
         android:id="@+id/txtRecipesAvailable"
@@ -47,25 +30,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:gravity="center_horizontal"
-        android:text="Recipes Available"
+        android:text="Recipes"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="370dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerRecipes"
-        android:layout_width="398dp"
-        android:layout_height="113dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="430dp" />
-
     <Button
-        android:id="@+id/btnUse"
+        android:id="@+id/btnViewAvailableRecipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Use"
-        tools:layout_editor_absoluteX="65dp"
-        tools:layout_editor_absoluteY="641dp" />
+        android:text="View Available" />
 
     <Button
         android:id="@+id/btnViewLibrary"
