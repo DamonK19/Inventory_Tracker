@@ -37,7 +37,7 @@ public class RecipeLibrary extends AppCompatActivity {
     }
 
     public void openViewRecipe() {
-        Intent intent = new Intent(this, ViewRecipe.class);
+        Intent intent = new Intent(this, RecipeAdd.class);
         startActivity(intent);
     }
 }

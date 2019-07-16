@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AvailableRecipes"></activity>
+        <activity android:name=".RecipeAdd"></activity>
+        <activity android:name=".AvailableRecipes" />
         <activity android:name=".Inventory" />
         <activity android:name=".ViewRecipe" />
         <activity android:name=".RecipeLibrary" />
