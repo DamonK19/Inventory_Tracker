@@ -3,14 +3,20 @@ package com.example.inventory_tracker;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.Spinner;
+
+import com.google.api.Distribution;
 
 import java.util.List;
 
@@ -18,6 +24,9 @@ public class RecipeAdd extends AppCompatActivity {
 
     Button addRecipeIngredient;
     List<Ingredient> lstRecipeIngredients;
+    String[] arraySpinner = new String[]{
+            "Ct", "g", "lb", "kg", "oz"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +39,29 @@ public class RecipeAdd extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RecipeAdd.this);
-                builder.setTitle("Title");
+                builder.setTitle("Input Ingredient Info");
 
                 final EditText name = new EditText(RecipeAdd.this);
+                name.setHint("Name");
                 final EditText amount = new EditText(RecipeAdd.this);
+                amount.setHint("Amount");
                 final Spinner units = new Spinner(RecipeAdd.this);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(RecipeAdd.this,
+                        android.R.layout.simple_spinner_dropdown_item, arraySpinner);
+                units.setAdapter(adapter);
                 name.setInputType(InputType.TYPE_CLASS_TEXT);
                 amount.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                Context context = view.getContext();
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+
+                layout.addView(name);
+                layout.addView(amount);
+                layout.addView(units);
+
+                builder.setView(layout);
+
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
