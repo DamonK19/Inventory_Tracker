@@ -13,4 +13,8 @@ public class Ingredient {
         this.uid = uid;
     }
 
+    public String toString() {
+        return name + " " + amount.toString() + " " + unit;
+    }
+
 }
