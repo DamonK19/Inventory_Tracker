@@ -51,17 +51,13 @@
         tools:layout_editor_absoluteX="12dp"
         tools:layout_editor_absoluteY="336dp" />
 
-    <ScrollView
+    <EditText
+        android:id="@+id/txtInstructions"
         android:layout_width="match_parent"
-        android:layout_height="157dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="139dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        android:layout_height="149dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/btnRecipeConfirm"
