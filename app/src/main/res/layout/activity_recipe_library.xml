@@ -8,6 +8,7 @@
     tools:context=".RecipeLibrary">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerLibrary"
         android:layout_width="match_parent"
         android:layout_height="258dp"
         tools:layout_editor_absoluteX="2dp"
