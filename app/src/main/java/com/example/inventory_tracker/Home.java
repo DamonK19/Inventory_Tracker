@@ -56,6 +56,13 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        viewAvailableRecipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAvailableRecipe();
+            }
+        });
+
         viewInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +86,6 @@ public class Home extends AppCompatActivity {
 
     public void openAvailableRecipe() {
         Intent intent = new Intent(this, AvailableRecipes.class);
-
         intent.putExtra("user", user);
         startActivity(intent);
     }
