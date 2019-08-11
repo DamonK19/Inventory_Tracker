@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
-    private Button viewInventory,viewAvailableRecipes, viewLibrary;
+    private Button viewInventory,viewAvailableRecipes, viewLibrary, signOut;
     FirebaseUser user;
 
     @Override
@@ -41,6 +41,7 @@ public class Home extends AppCompatActivity {
         viewInventory = findViewById(R.id.btnViewInventory);
         viewAvailableRecipes = findViewById(R.id.btnViewAvailableRecipes);
         viewLibrary = findViewById(R.id.btnViewLibrary);
+        signOut = findViewById(R.id.btnSignOut);
 
 
         Bundle extras = getIntent().getExtras();
@@ -70,6 +71,13 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOutUser();
+            }
+        });
+
 
     }
 
@@ -90,6 +98,9 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void signOutUser() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
 }
