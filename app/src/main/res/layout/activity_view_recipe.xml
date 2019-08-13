@@ -53,20 +53,4 @@
         android:gravity="start|top"
         android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/btnRecipeConfirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Confirm"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="666dp" />
-
-    <Button
-        android:id="@+id/btnRecipeCancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        tools:layout_editor_absoluteX="226dp"
-        tools:layout_editor_absoluteY="665dp" />
-
 </LinearLayout>
