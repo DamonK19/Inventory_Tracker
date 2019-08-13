@@ -8,7 +8,7 @@
     tools:context=".ViewRecipe">
 
     <TextView
-        android:id="@+id/txtviewRecipeName"
+        android:id="@+id/lblViewRecipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Recipe Name:"
@@ -16,7 +16,7 @@
         tools:layout_editor_absoluteY="51dp" />
 
     <EditText
-        android:id="@+id/txtRecipeName"
+        android:id="@+id/txtViewRecipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -32,17 +32,10 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="112dp" />
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewIngredients"
         android:layout_width="match_parent"
-        android:layout_height="183dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="379dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/txtviewInstructions"
@@ -52,17 +45,13 @@
         tools:layout_editor_absoluteX="12dp"
         tools:layout_editor_absoluteY="336dp" />
 
-    <ScrollView
+    <EditText
+        android:id="@+id/txtViewInstructions"
         android:layout_width="match_parent"
-        android:layout_height="157dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="139dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        android:layout_height="207dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/btnRecipeConfirm"

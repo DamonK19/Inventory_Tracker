@@ -35,6 +35,7 @@ public class RecipeLibrary extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView = findViewById(R.id.recyclerLibrary);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.hasFixedSize();
         adapter = new RecipeRecyclerAdapter(lstRecipe);
 
         Bundle extras = getIntent().getExtras();
@@ -54,9 +55,21 @@ public class RecipeLibrary extends AppCompatActivity {
         addRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openViewRecipe();
+                openAddRecipe();
             }
         });
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(RecipeLibrary.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                openViewRecipe(lstRecipe.get(position));
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+                openAddRecipe();
+            }
+        }));
 
         initRecipes();
     }
@@ -112,9 +125,17 @@ public class RecipeLibrary extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openViewRecipe() {
+    public void openAddRecipe() {
         Intent intent = new Intent(this, RecipeAdd.class);
         intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
+    public void openViewRecipe(Recipe recipe) {
+        Intent intent = new Intent(this, ViewRecipe.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("recipe", recipe);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

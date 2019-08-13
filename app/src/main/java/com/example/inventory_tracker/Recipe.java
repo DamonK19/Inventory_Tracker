@@ -1,8 +1,9 @@
 package com.example.inventory_tracker;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Serializable {
     String name;
     String instructions;
     String rid;

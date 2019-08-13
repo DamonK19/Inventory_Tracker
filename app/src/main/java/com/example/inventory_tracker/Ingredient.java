@@ -1,6 +1,8 @@
 package com.example.inventory_tracker;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
     String name;
     String unit;
     Integer amount;

@@ -8,7 +8,7 @@
     tools:context=".ViewRecipe">
 
     <TextView
-        android:id="@+id/txtviewRecipeName"
+        android:id="@+id/lblViewRecipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Recipe Name:"
@@ -16,7 +16,7 @@
         tools:layout_editor_absoluteY="51dp" />
 
     <EditText
-        android:id="@+id/txtRecipeName"
+        android:id="@+id/txtViewRecipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

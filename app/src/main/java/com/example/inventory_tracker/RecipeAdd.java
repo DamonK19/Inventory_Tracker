@@ -3,8 +3,6 @@ package com.example.inventory_tracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Context;
@@ -18,13 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Scroller;
 import android.widget.Spinner;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -57,7 +52,7 @@ public class RecipeAdd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_add);
         recipeIngredients = findViewById(R.id.listViewRecipeIngredients);
-        recipeName = findViewById(R.id.txtRecipeName);
+        recipeName = findViewById(R.id.txtViewRecipeName);
         recipeInstructions = findViewById(R.id.txtInstructions);
         addRecipeIngredient = findViewById(R.id.btnAddRecipeIngredient);
         confirm = findViewById(R.id.btnRecipeConfirm);

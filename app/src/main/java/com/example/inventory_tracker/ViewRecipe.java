@@ -1,21 +1,51 @@
 package com.example.inventory_tracker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseUser;
 
 public class ViewRecipe extends AppCompatActivity {
     private Button recipeConfirm, recipeCancel;
+    private RecyclerView recyclerView;
+    private Recipe recipe;
+    private TextView name, instructions;
+    private RecyclerAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_recipe);
 
+        Bundle extras = this.getIntent().getExtras();
+        if (extras != null) {
+            recipe = (Recipe)extras.get("recipe");
+        }
+
+
+
+        name = findViewById(R.id.txtViewRecipeName);
+        instructions = findViewById(R.id.txtViewInstructions);
+        recyclerView = findViewById(R.id.recyclerViewIngredients);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.hasFixedSize();
         recipeConfirm = findViewById(R.id.btnRecipeConfirm);
         recipeCancel = findViewById(R.id.btnRecipeCancel);
+
+        adapter = new RecyclerAdapter(recipe.getLstIngredient());
+
+        setFields(recipe);
+
+
 
         recipeConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +60,12 @@ public class ViewRecipe extends AppCompatActivity {
                 openRecipeLibrary();
             }
         });
+    }
+
+    private void setFields(Recipe recipe) {
+        name.setText(recipe.getName());
+        instructions.setText(recipe.getInstructions());
+        recyclerView.setAdapter(adapter);
     }
 
     public void openRecipeLibrary() {
