@@ -3,6 +3,8 @@ package com.example.inventory_tracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Context;
@@ -15,7 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+
 import android.widget.Spinner;
 
 
@@ -34,12 +36,15 @@ import java.util.Map;
 public class RecipeAdd extends AppCompatActivity {
 
 
+    private RecyclerView.LayoutManager layoutManager;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
     FirebaseUser user;
     Button addRecipeIngredient, confirm;
+    Recipe recipe;
     List<Ingredient> lstRecipeIngredients = new ArrayList<>();
-   ListView recipeIngredients;
+   RecyclerView recyclerView;
+    RecyclerAdapter adapterRecycler;
    EditText recipeName, recipeInstructions;
     String[] arraySpinner = new String[]{
             "Ct", "g", "lb", "kg", "oz"
@@ -51,15 +56,25 @@ public class RecipeAdd extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_add);
-        recipeIngredients = findViewById(R.id.listViewRecipeIngredients);
+        recyclerView = findViewById(R.id.recyclerRecipeIngredients);
         recipeName = findViewById(R.id.txtViewRecipeName);
         recipeInstructions = findViewById(R.id.txtInstructions);
         addRecipeIngredient = findViewById(R.id.btnAddRecipeIngredient);
         confirm = findViewById(R.id.btnRecipeConfirm);
 
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.hasFixedSize();
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user = (FirebaseUser) extras.get("user");
+            if(extras.getSerializable("recipe") != null){
+                recipe = (Recipe) extras.getSerializable("recipe");
+                adapterRecycler = new RecyclerAdapter(recipe.getLstIngredient());
+                setFields();
+
+            }
         }
 
 
@@ -106,12 +121,18 @@ public class RecipeAdd extends AppCompatActivity {
         recipeMap.put("instructions", recipe.getInstructions());
         recipeMap.put("uid", user.getUid());
 
+
         db.collection("Recipe Info")
                 .add(recipeMap)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         recipe.setRid(task.getResult().getId());
+
+                        recipeMap.put("rid", recipe.getRid());
+                        db.collection("Recipe Info")
+                                .document(recipe.getRid())
+                                .update(recipeMap);
                         addRecipeIngredientList(recipe);
                     }
                 });
@@ -119,9 +140,8 @@ public class RecipeAdd extends AppCompatActivity {
     }
 
     private void updateList() {
-        ArrayAdapter<Ingredient> adapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lstRecipeIngredients);
-        recipeIngredients.setAdapter(adapter);
+        RecyclerAdapter adapter = new RecyclerAdapter(lstRecipeIngredients);
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -168,6 +188,12 @@ public class RecipeAdd extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    private void setFields() {
+        recipeName.setText(recipe.getName());
+        recipeInstructions.setText(recipe.getInstructions());
+        recyclerView.setAdapter(adapterRecycler);
     }
 
 }

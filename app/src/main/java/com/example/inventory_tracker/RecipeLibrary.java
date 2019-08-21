@@ -1,14 +1,18 @@
 package com.example.inventory_tracker;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -67,7 +71,7 @@ public class RecipeLibrary extends AppCompatActivity {
 
             @Override
             public void onLongItemClick(View view, int position) {
-                openAddRecipe();
+                recipeDialogBox(view, lstRecipe.get(position));
             }
         }));
 
@@ -86,7 +90,8 @@ public class RecipeLibrary extends AppCompatActivity {
                                 //recipe parameters
                                 final String recName = document.get("name").toString();
                                 final String recInstructions = document.get("instructions").toString();
-                                String rid = document.getId();
+
+                                final String rid = document.getId();
                                 //get ingredients list
                                 db.collection("Recipe Info")
                                         .document(rid)
@@ -104,6 +109,7 @@ public class RecipeLibrary extends AppCompatActivity {
                                                         Ingredient ing = new Ingredient(name, unit, amount, "0");
                                                         lstIngredients.add(ing);
                                                         Recipe rec = new Recipe(recName,recInstructions,lstIngredients);
+                                                        rec.setRid(rid);
                                                         lstRecipe.add(rec);
 
                                                     }
@@ -136,6 +142,54 @@ public class RecipeLibrary extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable("recipe", recipe);
         intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public void recipeDialogBox(View view, final Recipe recipe) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(RecipeLibrary.this);
+
+        builder.setTitle("Recipe");
+
+        Context context = view.getContext();
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        builder.setView(layout);
+
+        builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                openAddRecipe(recipe);
+            }
+        });
+
+        builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteRecipe(recipe);
+            }
+        });
+
+        builder.show();
+
+    }
+
+    private void deleteRecipe(Recipe recipe) {
+        db.collection("Recipe Info")
+                .document(recipe.getRid())
+                .delete();
+
+        lstRecipe.clear();
+        initRecipes();
+
+    }
+
+    private void openAddRecipe(Recipe recipe) {
+        Intent intent = new Intent(this, RecipeAdd.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("recipe", recipe);
+        intent.putExtras(bundle);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 }

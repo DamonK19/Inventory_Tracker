@@ -32,10 +32,10 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="112dp" />
 
-    <ListView
-        android:id="@+id/listViewRecipeIngredients"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRecipeIngredients"
         android:layout_width="match_parent"
-        android:layout_height="203dp" />
+        android:layout_height="200dp" />
 
     <Button
         android:id="@+id/btnAddRecipeIngredient"

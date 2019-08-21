@@ -38,8 +38,7 @@ public class ViewRecipe extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.hasFixedSize();
-        recipeConfirm = findViewById(R.id.btnRecipeConfirm);
-        recipeCancel = findViewById(R.id.btnRecipeCancel);
+
 
         adapter = new RecyclerAdapter(recipe.getLstIngredient());
 
@@ -47,19 +46,7 @@ public class ViewRecipe extends AppCompatActivity {
 
 
 
-        recipeConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openRecipeLibrary();
-            }
-        });
 
-        recipeCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openRecipeLibrary();
-            }
-        });
     }
 
     private void setFields(Recipe recipe) {
@@ -72,5 +59,7 @@ public class ViewRecipe extends AppCompatActivity {
         Intent intent = new Intent(this, RecipeLibrary.class);
         startActivity(intent);
     }
+
+
 
 }
