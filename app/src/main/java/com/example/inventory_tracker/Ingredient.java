@@ -7,6 +7,7 @@ public class Ingredient implements Serializable {
     String unit;
     Integer amount;
     String uid;
+    String id;
 
     Ingredient(String name, String unit, Integer amount, String uid) {
         this.name = name;
@@ -51,4 +52,11 @@ public class Ingredient implements Serializable {
         return name + " " + amount.toString() + " " + unit;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
