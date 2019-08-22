@@ -92,7 +92,7 @@ public class Inventory extends AppCompatActivity {
         builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                openIngredient();
+                openIngredient(ingredient);
             }
         });
 
@@ -104,6 +104,15 @@ public class Inventory extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    private void openIngredient(Ingredient ingredient) {
+        Intent intent = new Intent(this, IngredientAdd.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ingredient", ingredient);
+        intent.putExtras(bundle);
+        intent.putExtra("user", user);
+        startActivity(intent);
     }
 
     private void deleteIngredient(Ingredient ingredient) {

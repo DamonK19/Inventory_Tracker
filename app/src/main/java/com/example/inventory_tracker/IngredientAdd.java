@@ -29,7 +29,12 @@ public class IngredientAdd extends AppCompatActivity {
     EditText txtName, txtAmount;
     String uid;
     Spinner s;
+    Ingredient ing;
     FirebaseUser user;
+    ArrayAdapter<String> adapter;
+    String[] arraySpinner = new String[]{
+            "Ct", "g", "lb", "kg", "oz"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +46,7 @@ public class IngredientAdd extends AppCompatActivity {
                 .setTimestampsInSnapshotsEnabled(true)
                 .build();
         //db.setFirestoreSettings(settings);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            user = (FirebaseUser) extras.get("user");
-        }
-        String[] arraySpinner = new String[]{
-                "Ct", "g", "lb", "kg", "oz"
-        };
-        s = findViewById(R.id.spinnerUnits);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item, arraySpinner);
-        s.setAdapter(adapter);
 
-        uid = user.getUid();
         txtName = findViewById(R.id.txtName);
         txtAmount = findViewById(R.id.txtAmount);
 
@@ -61,6 +54,25 @@ public class IngredientAdd extends AppCompatActivity {
         confirm = findViewById(R.id.btnIngredientConfirm);
         remove = findViewById(R.id.btnIngredientRemove);
         cancel = findViewById(R.id.btnIngredientCancel);
+
+        s = findViewById(R.id.spinnerUnits);
+        adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item, arraySpinner);
+        s.setAdapter(adapter);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            user = (FirebaseUser) extras.get("user");
+            if( extras.getSerializable("ingredient") != null) {
+                ing = (Ingredient) extras.getSerializable("ingredient");
+                setFields();
+            }
+        }
+
+
+
+        uid = user.getUid();
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +99,14 @@ public class IngredientAdd extends AppCompatActivity {
                 openHome();
             }
         });
+    }
+
+    private void setFields() {
+        txtName.setText(ing.getName());
+        txtAmount.setText(ing.getAmount().toString());
+        int spinnerPosition = adapter.getPosition(ing.getUnit());
+        s.setSelection(spinnerPosition);
+
     }
 
     public void openHome() {
