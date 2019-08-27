@@ -20,39 +20,44 @@ import java.util.List;
 
 public class AvailableRecipes extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    //Arraylists of user recipe library, user inventory and available recipes
     private List<Recipe> lstLibrary = new ArrayList<>();
     private List<Ingredient> lstInventory = new ArrayList<>();
     private List<Recipe> lstAvailable = new ArrayList<>();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    //FirebaseVariable
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser user;
+
+    //Recyclerview variables
+    private RecyclerView recyclerView;
     private RecipeRecyclerAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private FirebaseAuth mAuth;
-    FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_available_recipes);
 
+        //set the recycler to the available lists
         layoutManager = new LinearLayoutManager(this);
         recyclerView = findViewById(R.id.recyclerAvailableRecipes);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RecipeRecyclerAdapter(lstAvailable);
 
+        //assign user
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user = (FirebaseUser) extras.get("user");
         }
 
-
+        //initialize list of available ingredients
         initLibrary();
-
-
-
 
     }
 
+    //function to find recipes that are available
     private void findAvailable() {
         for(Recipe rec : lstLibrary){
             int count = 0;
@@ -72,6 +77,7 @@ public class AvailableRecipes extends AppCompatActivity {
 
     }
 
+    //function to assign all user recipes to library list
     private void initLibrary() {
         db.collection("Recipe Info")
                 .whereEqualTo("uid", user.getUid())
@@ -118,6 +124,7 @@ public class AvailableRecipes extends AppCompatActivity {
                 });
     }
 
+    //function to initialize user inventory
     private void initInventory() {
         db.collection("Ingredient")
                 .whereEqualTo("uid", user.getUid())

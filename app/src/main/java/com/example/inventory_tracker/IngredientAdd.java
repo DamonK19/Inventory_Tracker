@@ -11,9 +11,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
@@ -21,16 +18,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class IngredientAdd extends AppCompatActivity {
+
+    //GUI componenets
     private Button confirm, remove, cancel;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    Map<String, Object> ingredient = new HashMap<>();
-
     EditText txtName, txtAmount;
     String uid;
     Spinner s;
-    Ingredient ing;
+
+    //Firebase Variables
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user;
+
+    //Hashmap for writing new ingredients to Inventory
+    Map<String, Object> ingredient = new HashMap<>();
+
+    //Global Ingredient
+    Ingredient ing;
+
+    //Array and adapter used for the spinner
     ArrayAdapter<String> adapter;
     String[] arraySpinner = new String[]{
             "Ct", "g", "lb", "kg", "oz"
@@ -47,19 +52,22 @@ public class IngredientAdd extends AppCompatActivity {
                 .build();
         //db.setFirestoreSettings(settings);
 
+        //setting editTexts
         txtName = findViewById(R.id.txtName);
         txtAmount = findViewById(R.id.txtAmount);
 
-
+        //setting buttons
         confirm = findViewById(R.id.btnIngredientConfirm);
         remove = findViewById(R.id.btnIngredientRemove);
         cancel = findViewById(R.id.btnIngredientCancel);
 
+        //set spinner and assign values to it
         s = findViewById(R.id.spinnerUnits);
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, arraySpinner);
         s.setAdapter(adapter);
 
+        //set user variable and global ingredient, if given, and set fields
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user = (FirebaseUser) extras.get("user");
@@ -69,10 +77,10 @@ public class IngredientAdd extends AppCompatActivity {
             }
         }
 
-
-
+        //assign user id variable for ease
         uid = user.getUid();
 
+        //add text fields to map and add to database collection of ingredients
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +95,8 @@ public class IngredientAdd extends AppCompatActivity {
 
 
         });
+
+        //buttons to open the home page
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +111,7 @@ public class IngredientAdd extends AppCompatActivity {
         });
     }
 
+    //Function for setting the fields for ingredient passed in extras
     private void setFields() {
         txtName.setText(ing.getName());
         txtAmount.setText(ing.getAmount().toString());
@@ -109,15 +120,11 @@ public class IngredientAdd extends AppCompatActivity {
 
     }
 
+    //opens home page
     public void openHome() {
         Intent intent = new Intent(this, Home.class);
         intent.putExtra("user", user);
         startActivity(intent);
     }
 
-    public void writeNewIngredient(Map<String, Object> map) {
-
-        db.collection("Ingredient")
-                .add(map);
-    }
 }

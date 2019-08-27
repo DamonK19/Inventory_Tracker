@@ -27,11 +27,16 @@ import java.util.List;
 
 public class Inventory extends AppCompatActivity {
 
+    //GUI component
     private Button addIngredient;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    //Firebase variables
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
-    FirebaseUser user;
-    List<Ingredient> lstIngredient = new ArrayList<>();
+    private FirebaseUser user;
+
+    //Recycler view variables for the inventory display
+    private List<Ingredient> lstIngredient = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerAdapter adapter;
@@ -40,23 +45,30 @@ public class Inventory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
+
+        //set button
         addIngredient = findViewById(R.id.btnAddIngredient);
+
+        //set mAuth
         mAuth = FirebaseAuth.getInstance();
+
+        //set recyclerview
         recyclerView = findViewById(R.id.recyclerInventory);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerAdapter(lstIngredient);
         recyclerView.setHasFixedSize(true);
 
-
-
+        //assign user
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             user = (FirebaseUser) extras.get("user");
         }
 
+        //initialize lstIngredient and display available inventory
         initData();
 
+        //opens new ingredient page
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +76,7 @@ public class Inventory extends AppCompatActivity {
             }
         });
 
+        //opens dialog box if clicked on item in inventory recycler
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(Inventory.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -78,6 +91,7 @@ public class Inventory extends AppCompatActivity {
 
     }
 
+    //dialog for user to decide if they want to edit or delete item from inventory
     private void ingredientDialogBox(View view, final Ingredient ingredient) {
         AlertDialog.Builder builder = new AlertDialog.Builder(Inventory.this);
 
@@ -106,6 +120,7 @@ public class Inventory extends AppCompatActivity {
         builder.show();
     }
 
+    //function to open the ingredient page and set values with variable passed
     private void openIngredient(Ingredient ingredient) {
         Intent intent = new Intent(this, IngredientAdd.class);
         Bundle bundle = new Bundle();
@@ -115,6 +130,7 @@ public class Inventory extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //function to delete ingredient from database
     private void deleteIngredient(Ingredient ingredient) {
         db.collection("Ingredient")
                 .document(ingredient.getId())
@@ -124,6 +140,7 @@ public class Inventory extends AppCompatActivity {
         initData();
     }
 
+    //function to initiate data to the inventory list
     public void initData() {
         db.collection("Ingredient")
                 .whereEqualTo("uid", user.getUid())
@@ -151,7 +168,7 @@ public class Inventory extends AppCompatActivity {
     }
 
 
-
+    //open blank ingredient page
     public void openIngredient() {
         Intent intent = new Intent(this, IngredientAdd.class);
         intent.putExtra("user", user);

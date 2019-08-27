@@ -29,7 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
+
+    //GUI componenets
     private Button viewInventory,viewAvailableRecipes, viewLibrary, signOut;
+
+    //Firebase variables
     FirebaseUser user;
 
     @Override
@@ -37,19 +41,19 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
+        //set buttons
         viewInventory = findViewById(R.id.btnViewInventory);
         viewAvailableRecipes = findViewById(R.id.btnViewAvailableRecipes);
         viewLibrary = findViewById(R.id.btnViewLibrary);
         signOut = findViewById(R.id.btnSignOut);
 
-
+        //assign user from extras
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             user = (FirebaseUser) extras.get("user");
         }
 
-
+        //opens recipe library
         viewLibrary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +61,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        //opens the available recipes page
         viewAvailableRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +69,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        //opens inventory page
         viewInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +77,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        //signs out user
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,23 +88,28 @@ public class Home extends AppCompatActivity {
 
     }
 
+    //opens inventory
     public void openInventory() {
         Intent intent = new Intent(this, Inventory.class);
         intent.putExtra("user", user);
         startActivity(intent);
     }
+
+    //opens recipe library
     public void openRecipeLibrary() {
         Intent intent = new Intent(this, RecipeLibrary.class);
         intent.putExtra("user", user);
         startActivity(intent);
     }
 
+    //open available recipes
     public void openAvailableRecipe() {
         Intent intent = new Intent(this, AvailableRecipes.class);
         intent.putExtra("user", user);
         startActivity(intent);
     }
 
+    //signs out user
     public void signOutUser() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

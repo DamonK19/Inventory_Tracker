@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,9 +17,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+
+    //GUI components
     private Button login;
     private Button register;
     EditText txtEmail, txtPassword;
+
+    //Firebase variables
     private FirebaseAuth mAuth;
 
 
@@ -30,16 +33,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
+        //get instance of firebase
         mAuth = FirebaseAuth.getInstance();
 
+        //set GUI componenets
         txtEmail = (EditText)findViewById(R.id.txtUsername);
         txtPassword = (EditText)findViewById(R.id.txtPassword);
-
         login = findViewById(R.id.btnLogin);
         register = findViewById(R.id.btnRegister);
 
+        //adds user to the database
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //login to the app
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //opne the home page
     public void openHome(FirebaseUser user) {
         Intent intent = new Intent(this, Home.class);
         intent.putExtra("user", user);
